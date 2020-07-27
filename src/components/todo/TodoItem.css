@@ -1,0 +1,15 @@
+.TodoItem {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+}
+
+.TodoItem-text {
+    flex: 1;
+}
+
+.TodoItem-delete {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 24px;
+}
