@@ -9,21 +9,15 @@ export default class Todo extends Component {
     // Initial state
     this.state = {
       todos: [
-        {
-          id: 1,
-          text: 'Todo item 01'
-        },
-        {
-          id: 2,
-          text: 'Todo item 02'
-        },
+        { id: 1, text: 'Todo item 01' },
+        { id: 2, text: 'Todo item 02' },
       ],
       todoText: ''
     };
   }
 
   // Methods & handlers
-  generateId() {
+  generateId = () => {
     if (this.state.todos && this.state.todos.length > 0) {
       return Math.max(...this.state.todos.map(item => item.id)) + 1;
     } else {
