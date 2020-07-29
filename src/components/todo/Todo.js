@@ -43,6 +43,11 @@ export default class Todo extends Component {
     }));
   };
 
+  deleteTodo = (id) => {
+    this.setState(({ todos }) => ({
+      todos: todos.filter((item) => item.id !== id)
+    }));
+  };
 
   handleInputKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -56,25 +61,20 @@ export default class Todo extends Component {
     });
   };
 
-
-  deleteTodo = (id) => {
-    this.setState(({ todos }) => ({
-      todos: todos.filter((item) => item.id !== id)
-    }));
-  };
-
   render() {
+    const { todos, todoText } = this.state;
+
     return (
       <div className="Todo">
         <h1 className="Todo-header">React To Do</h1>
         <div className="Todo-container">
           <div className="Todo-content">
-            {this.state.todos.map(item => {
+            {todos.map(item => {
               return <TodoItem key={item.id} item={item} deleteItem={this.deleteTodo} />
             })}
           </div>
           <div className="Todo-input">
-            <input className="Todo-input-text" type="text" value={this.state.todoText} onChange={this.handleInputChange} onKeyPress={this.handleInputKeyPress} />
+            <input className="Todo-input-text" type="text" value={todoText} onChange={this.handleInputChange} onKeyPress={this.handleInputKeyPress} />
             <button className="Todo-input-add" onClick={this.createTodo}>+</button>
           </div>
         </div>
