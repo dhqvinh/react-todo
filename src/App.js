@@ -1,5 +1,5 @@
 import React from 'react';
-import Todo from './components/todo/Todo'
+import TodoContainer from './components/todo/TodoContainer'
 import logo from './assets/logo.svg';
 import './App.css';
 
@@ -10,7 +10,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="App-container">
-        <Todo />
+        <TodoContainer />
       </div>
     </div>
   );

@@ -4,22 +4,19 @@ import TodoItem from './TodoItem';
 
 export default class Todo extends Component {
   constructor(props) {
+    // props will receive Redux state & actions from the Container
     super(props);
 
-    // Initial state
+    // Component state
     this.state = {
-      todos: [
-        { id: 1, text: 'Todo item 01' },
-        { id: 2, text: 'Todo item 02' },
-      ],
       todoText: ''
     };
   }
 
   // Methods & handlers
   generateId = () => {
-    if (this.state.todos && this.state.todos.length > 0) {
-      return Math.max(...this.state.todos.map(item => item.id)) + 1;
+    if (this.props.todos && this.props.todos.length > 0) {
+      return Math.max(...this.props.todos.map(item => item.id)) + 1;
     } else {
       return 1;
     }
@@ -34,15 +31,19 @@ export default class Todo extends Component {
 
     const newTodo = { id: this.generateId(), text: this.state.todoText };
 
-    this.setState(({ todos }) => ({
-      todos: [
-        ...todos,
-        newTodo
-      ],
+    // Call redux action
+    this.props.createTodo(newTodo);
+
+    this.setState({
       todoText: ''
-    }));
+    });
   };
 
+
+  deleteTodo = (id) => {
+    // Call redux action
+    this.props.deleteTodo(id);
+  };
 
   handleInputKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -56,25 +57,21 @@ export default class Todo extends Component {
     });
   };
 
-
-  deleteTodo = (id) => {
-    this.setState(({ todos }) => ({
-      todos: todos.filter((item) => item.id !== id)
-    }));
-  };
-
   render() {
+    const { todos } = this.props;
+    const { todoText } = this.state;
+
     return (
       <div className="Todo">
         <h1 className="Todo-header">React To Do</h1>
         <div className="Todo-container">
           <div className="Todo-content">
-            {this.state.todos.map(item => {
+            {todos.map(item => {
               return <TodoItem key={item.id} item={item} deleteItem={this.deleteTodo} />
             })}
           </div>
           <div className="Todo-input">
-            <input className="Todo-input-text" type="text" value={this.state.todoText} onChange={this.handleInputChange} onKeyPress={this.handleInputKeyPress} />
+            <input className="Todo-input-text" type="text" value={todoText} onChange={this.handleInputChange} onKeyPress={this.handleInputKeyPress} />
             <button className="Todo-input-add" onClick={this.createTodo}>+</button>
           </div>
         </div>
